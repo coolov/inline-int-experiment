@@ -1,5 +1,4 @@
-# embedding freeform code in react
-
+# :|
 Example:
 
 ```
