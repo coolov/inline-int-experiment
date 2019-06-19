@@ -1,0 +1,116 @@
+<html lang="en-US">
+  <head>
+    <script src="component-runtime.js"></script>
+    <style>
+      #container {
+        border: 1px solid #000;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <!-- begin: copy paste into lib/fakescoop.js -->
+      <div>
+        <div></div>
+        <div></div>
+      </div>
+      <script data-nyt-component>
+        (function() {
+          const id = "d3-example";
+          let timer;
+          let svg;
+
+          function render(el) {
+            const [svgDots, canvasDots] = el.children;
+            const width = (el.clientWidth - 20) / 2;
+            const height = width;
+
+            svg = d3
+              .select(svgDots)
+              .st({ display: "inline-block" })
+              .append("svg")
+              .at({ width, height })
+              .appendMany(d3.range(500), "circle")
+              .at({
+                opacity: d => Math.random(),
+                cx: d => Math.random() * width,
+                cy: d => Math.random() * height,
+                r: 10
+              });
+
+            svg
+              .transition()
+              .duration(d => Math.random() * 20000)
+              .at({
+                opacity: d => Math.random(),
+                cx: d => Math.random() * width,
+                cy: d => Math.random() * height
+              });
+
+            const ctx = d3
+              .select(canvasDots)
+              .st({ display: "inline-block" })
+              .append("canvas")
+              .at({ width, height })
+              .node()
+              .getContext("2d");
+
+            timer = d3.timer(() => {
+              ctx.strokeStyle = Math.random() < 0.5 ? "#fff" : "#000";
+
+              ctx.strokeRect(
+                Math.random() * width,
+                Math.random() * width,
+                Math.random() * width,
+                Math.random() * width
+              );
+            });
+          }
+
+          function didRegister() {
+            this.d3script = document.createElement("script");
+            this.d3script.src =
+              "https://unpkg.com/d3-jetpack@2.0.7/build/d3v4+jetpack";
+            document.head.append(this.d3script);
+          }
+
+          function didMount(containerEl) {
+            const el = containerEl.firstElementChild;
+            if (window.d3) {
+              render(el);
+            } else {
+              // wait for d3 if it's not yet loaded
+              this.d3script.onload = () => render(el);
+            }
+          }
+
+          function willUnmount() {
+            if (timer) {
+              timer.stop();
+            }
+            if (svg) {
+              svg.interrupt();
+            }
+          }
+
+          window.registerComponent({
+            id,
+            didRegister,
+            didMount,
+            willUnmount
+          });
+        })();
+      </script>
+      <!-- end -->
+    </div>
+    <script>
+      const component = window.getComponent("d3-example");
+      component.didMount(document.getElementById("container"));
+      setTimeout(() => {
+        component.willUnmount();
+      }, 2000);
+    </script>
+  </body>
+</html>

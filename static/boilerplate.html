@@ -1,0 +1,51 @@
+<!--
+  Preview at
+  https://43zrz663y4.sse.codesandbox.io/static/boilerplate.html
+-->
+
+<html lang="en-US">
+
+<head>
+	<script src="component-runtime.js"></script>
+</head>
+
+<body>
+	<div id="container">
+		<!-- begin: copy paste into lib/fakescoop.js -->
+		<div style="min-height:120px; padding: 10px; line-height: 120px; text-align: center; font-size: 80px;"></div>
+		<script>
+			(function() {
+          let el;
+          window.registerComponent({
+            // this will be auto-generated and match the 
+            // contentId in scoop, e,g, `100000006216421`
+            id: "unique-component-id",
+            
+            // didRegister is called inline in the document
+            // if the component is server rendered
+            didRegister() {},
+            
+            // called after react has mounted 
+            // `containerEl` is a reference to the div that 
+            // wraps the interactive
+            didMount(containerEl) {
+              el = containerEl.firstElementChild;
+              alert('did mount!');
+            },
+
+            // called before react is unmounted
+            willUnmount() {}
+          });
+        })();
+		</script>
+		<!-- end -->
+	</div>
+	<script>
+		let component = window.getComponent("unique-component-id")
+    setTimeout(() => {
+      component.didMount(document.getElementById("container"));  
+    }, 1000);    
+	</script>
+</body>
+
+</html>

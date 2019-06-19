@@ -1,0 +1,18 @@
+{
+  "name": "inline-interactive-dom-stashing",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "d3-require": "1.2.2",
+    "next": "latest",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  },
+  "license": "ISC",
+  "keywords": [],
+  "description": ""
+}

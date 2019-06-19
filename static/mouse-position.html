@@ -1,0 +1,40 @@
+<html lang="en-US">
+
+<head>
+	<script src="component-runtime.js"></script>
+</head>
+
+<body>
+	<div id="container">
+		<!-- begin: copy paste into lib/fakescoop.js -->
+		<div style="min-height:120px; padding: 10px; line-height: 120px; text-align: center; font-size: 80px;"></div>
+		<script data-nyt-component>
+			(function() {
+          let el;
+
+          function updateMousePosition({ pageX, pageY }) {
+            el.innerHTML = pageX + "," + pageY;
+          }
+
+          window.registerComponent({
+            id: "mouse-position",
+            didMount(containerEl) {
+              el = containerEl.firstElementChild;
+              document.addEventListener("mousemove", updateMousePosition);
+            },
+            willUnmount() {
+              document.removeEventListener("mousemove", updateMousePosition);
+            }
+          });
+        })();
+		</script>
+		<!-- end -->
+	</div>
+	<script>
+		window
+        .getComponent("mouse-position")
+        .didMount(document.getElementById("container"));
+	</script>
+</body>
+
+</html>

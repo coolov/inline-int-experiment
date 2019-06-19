@@ -1,0 +1,41 @@
+<html lang="en-US">
+
+<head>
+	<script src="component-runtime.js"></script>
+</head>
+
+<body>
+	<div id="container">
+		<!-- begin: copy paste into lib/fakescoop.js -->
+		<div style="min-height:120px; padding: 10px; line-height: 120px; text-align: center; font-size: 80px;"></div>
+		<script data-nyt-component>
+			(function() {
+          window.registerComponent({
+            id: "stateful-counter",
+            didRegister() {
+              this.counter = 0;
+            },
+            didMount(containerEl) {
+              let el = containerEl.firstElementChild;
+              el.innerHTML = this.counter;
+              this.intervalId = setInterval(() => {
+                this.counter++;
+                el.innerHTML = this.counter;
+              }, 500);
+            },
+            willUnmount(el) {
+              clearInterval(this.intervalId);
+            }
+          });
+        })();
+		</script>
+		<!-- end -->
+	</div>
+	<script>
+		window
+        .getComponent("stateful-counter")
+        .didMount(document.getElementById("container"));
+	</script>
+</body>
+
+</html>

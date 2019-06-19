@@ -1,0 +1,42 @@
+<!--
+  Preview at
+  https://43zrz663y4.sse.codesandbox.io/static/boilerplate.html
+-->
+
+<html lang="en-US">
+
+<head>
+	<script src="component-runtime.js"></script>
+</head>
+
+<body>
+	<div id="container">
+		<!-- begin: copy paste into lib/fakescoop.js -->
+		<div style="min-height:120px; padding: 10px; line-height: 120px; text-align: center; font-size: 80px;">
+		</div>
+		<script>
+			let id = "unique-component-id";
+      let scripts = ['lodash'];
+      let compiled;
+      let didMount = (containerEl, _) => {
+        let el = containerEl.firstElementChild;
+        if (!compiled) {
+          compiled = _.template('Hello <%= user %>!');
+        }              
+        el.innerHTML = compiled({ 'user': 'Tom' });;
+      }
+      window.registerComponent({
+        id,
+        scripts,
+        didMount  
+      })
+		</script>
+		<!-- end -->
+	</div>
+	<script>
+		let component = window.getComponent("unique-component-id")
+    component.didMount(document.getElementById("container"));  
+	</script>
+</body>
+
+</html>
